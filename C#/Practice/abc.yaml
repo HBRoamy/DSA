@@ -1,0 +1,1768 @@
+openapi: 3.0.1
+info:
+  title: Snaplotbff
+  description: |
+
+  contact:
+    name: Team Tejas
+  version: 1.0.0
+servers:
+  - url: "https://api.snaplotbff.coxauto-imgmerch-np.cloud"
+    description: Development
+  - url: "https://api.snaplotbff.coxauto-imgmerch.cloud"
+    description: Production
+tags:
+  - name: Overview
+    description: | 
+      Snaplotbff provides a materialized view of data from distinct sources to make it readily available to Snaplot Android App & Snaplot iOS App
+  - name: Support
+    description: |
+      For any questions reach out to us at `#iss-tejas` or `#rd-capacitors` in Slack.
+  - name: PhotoGuideLibrary
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideLibrary"/>
+  - name: ActivePhotoGuideWithMetaData
+    description: <SchemaDefinition schemaRef="#/components/schemas/ActivePhotoGuideWithMetaData"/>
+  - name: PhotoGuideLibraryCollection
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideLibraryCollection"/>
+  - name: PhotoGuideRequest
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideRequest"/>
+  - name: PhotoPackageForEntityResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoPackageForEntityResponse"/>  
+  - name: BFFEnabledStatusResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/BFFEnabledStatusResponse"/>  
+  - name: ResponseMessageKind
+    description: <SchemaDefinition schemaRef="#/components/schemas/ResponseMessageKind"/>
+  - name: MessageDetail
+    description: <SchemaDefinition schemaRef="#/components/schemas/MessageDetail"/>
+  - name: MessageDetailKind
+    description: <SchemaDefinition schemaRef="#/components/schemas/MessageDetailKind"/>
+  - name: MessageDetailCode
+    description: <SchemaDefinition schemaRef="#/components/schemas/MessageDetailCode"/>
+  - name: InventoryLotInfo
+    description: <SchemaDefinition schemaRef="#/components/schemas/InventoryLotInfo"/>
+  - name: PhotoPackageInfo
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoPackageInfo"/>
+  - name: JobStatus
+    description: <SchemaDefinition schemaRef="#/components/schemas/JobStatus"/>
+  - name: VirtualRooftopInfo
+    description: <SchemaDefinition schemaRef="#/components/schemas/VirtualRooftopInfo"/>
+  - name: VirtualRooftopSetting
+    description: <SchemaDefinition schemaRef="#/components/schemas/VirtualRooftopSetting"/>
+  - name: VehicleQueryResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleQueryResponse"/>
+  - name: VehicleInfo
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleInfo"/>
+  - name: VehicleResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleResponse"/>
+  - name: Vehicle360Request
+    description: <SchemaDefinition schemaRef="#/components/schemas/Vehicle360Request"/>
+  - name: Vehicle360Response
+    description: <SchemaDefinition schemaRef="#/components/schemas/Vehicle360Response"/>
+  - name: VehicleImageBatchResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleImageBatchResponse"/>
+  - name: VehicleImageBatchUpdateRequest
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleImageBatchUpdateRequest"/>
+  - name: UserDealerInfoResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/UserDealerInfoResponse"/>
+  - name: VehicleImageUploadResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/VehicleImageUploadResponse"/>
+  - name: UploadResult
+    description: <SchemaDefinition schemaRef="#/components/schemas/UploadResult"/>
+
+
+x-tagGroups:
+  - name: INTRODUCTION
+    tags:
+      - Overview
+      - Authentication
+      - Support
+  - name: API
+    tags:
+      - Logs
+      - PhotoPackage
+      - User Dealer
+      - Vehicle Media
+      - Vehicle Query
+      - Virtual Rooftop
+  - name: Models
+    tags:
+      - PhotoGuideLibrary
+      - PhotoGuideLibraryCollection
+      - ActivePhotoGuideWithMetaData
+      - PhotoGuideLibraryCollection
+      - PhotoGuideRequest
+      - PhotoPackageForEntityResponse
+      - InventoryLotInfo
+      - PhotoPackageInfo
+      - JobStatus
+      - BFFEnabledStatusResponse
+      - VirtualRooftopInfo
+      - ResponseMessageKind
+      - MessageDetail
+      - MessageDetailKind
+      - MessageDetailCode
+      - VehicleQueryResponse
+      - VehicleInfo
+      - VehicleCondition
+      - VehicleLifeCycleState
+      - VehicleImageInfo
+      - VirtualRooftopListResponse
+      - VehicleResponse
+      - Vehicle360Request
+      - Vehicle360Response
+      - VehicleImageBatchResponse
+      - VehicleImageResponse
+      - VirtualRooftopInfo
+      - VehicleImageBatchUpdateRequest
+      - VehicleImageSingleUpdateRequest
+      - VirtualRooftopType
+      - VirtualRooftopSetting
+      - UserDealerInfoResponse
+      - UserDealerInfo
+      - VehicleImageUploadResponse
+components:
+  schemas:
+    PhotoGuideLibrary:
+      required:
+        - PhotoGuideDefinitionId
+      type: object
+      properties:
+        PhotoGuideDefinitionId:
+          type: string
+          description: Photo Guide Definition Id
+          example: 1000115
+        ImageFileName:
+          type: string
+          description: Image File Name
+          example: ph_icon_wide_angle_dashboard.png
+        ImageFileNameWithId:
+          type: string
+          description: Image FileName with Id
+          example: 1000115_ph_icon_wide_angle_dashboard.png
+        Title:
+          type: string
+          description: Title
+          format: string
+        ShortTitle:
+          type: string
+          description: Short Title
+          format: string
+        ImageUrl:
+          type: string
+          description: Image Url
+          format: string
+      additionalProperties: false
+      description: Photo Guide Library Data
+      example:
+        PhotoGuideDefinitionId: 1000115
+        Title: 16:9 Wide Angle Dashboard
+        ImageFileName: "ph_icon_wide_angle_dashboard.png"
+        ImageFileNameWithId: "1000115_ph_icon_wide_angle_dashboard.png"
+        ShortTitle: "16:9 Wide Dash"
+        ImageUrl: "http://image-url/1.png"
+    PhotoGuideLibraryCollection:
+      type: array
+      items:
+          $ref: "#/components/schemas/PhotoGuideLibrary"
+          description: List of hotspot matching the criteria
+          nullable: true
+      additionalProperties: false
+      example:
+          - PhotoGuideDefinitionId: 1000115
+            ImageFileName : ph_icon_wide_angle_dashboard.png
+            ImageFileNameWithId : 1000115_ph_icon_wide_angle_dashboard.png
+            Title: 16:9 Wide Angle Dashboard
+            ShortTitle: 16:9 Wide Dash
+            ImageUrl : http://image.url
+          - PhotoGuideDefinitionId: 1000000
+            ImageFileName : ustom_guide_ph_icon_3rd_row_st.png
+            ImageFileNameWithId : 1000000_custom_guide_ph_icon_3rd_row_st.png
+            Title: 3rd Row Seats
+            ShortTitle: 3rd Row St
+            ImageUrl : http://image.url
+    PhotoGuideRequest:
+      required:
+        - EntityId
+        - IsActive
+      type: object
+      properties:
+        EntityId:
+          type: string
+          description: Entity Id 
+        IsActive:
+          type: boolean
+          description: IsActive 
+        PhotoGuides:
+          type: array
+          items:
+            type: object
+            properties:
+              IsRequired:
+                type: boolean
+                description: true if photoguide is required
+              PhotoGuideDefinitionId:
+                type: string
+                description: photoguide Id
+              Position:
+                type: integer
+                description: position of a photoguide
+              TitleOverride:
+                type: string
+                description: override title if required 
+    PhotoPackageForEntityResponse:
+      required:
+        - EntityId
+        - IsActive
+      type: object
+      properties:
+        EntityId:
+          type: string
+          description: Entity Id 
+        IsActive:
+          type: boolean
+          description: IsActive 
+        PhotoGuides:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivePhotoGuideWithMetaData"            
+        UnSelectedPhotoGuides:
+          type: array
+          items:
+            $ref: "#/components/schemas/PhotoGuideLibrary"
+    ActivePhotoGuideWithMetaData:
+      type: object
+      properties:
+        IsRequired:
+          type: boolean
+          description: true if photoguide is required
+        PhotoGuideDefinitionId:
+          type: string
+          description: photoguide Id
+        Position:
+          type: integer
+          description: position of a photoguide
+        TitleOverride:
+          type: string
+          description: override title if required
+        ImageFileName:
+          type: string
+          description: actual image file name which describes the photoguide image
+        ImageFileNameWithId:
+          type: string
+          description: combination of image name and Id
+        Title:
+           type: string
+           description: actual name of the photoguide
+        ShortTitle:
+          type: string
+          description: abbreviated version of the title
+        ImageUrl:
+          type: string
+          description: publically accessible image url on s3 bucket
+    InventoryLotInfo: 
+        type: object
+        properties: 
+          InventoryLotId: 
+            type: string
+            nullable: true
+          Name: 
+            type: string
+            nullable: true
+          MaxImageWidth: 
+            type: integer
+            format: int32
+          MaxImageHeight:
+            type: integer
+            format: int32
+          PhotoPackages: 
+            type: array
+            items: 
+              "$ref": "#/components/schemas/PhotoPackageInfo"
+            nullable: true
+        additionalProperties: false
+    PhotoPackageInfo: 
+        type: object
+        properties: 
+          DateCreated: 
+            type: string
+            nullable: true
+          DateModified: 
+            type: string
+            nullable: true
+          InventoryLotId: 
+            type: string
+            nullable: true
+          IsActive:
+            type: "boolean"
+          Name: 
+            type: string
+            nullable: true
+          PhotoPackageId: 
+            type: string
+            nullable: true
+        additionalProperties: false
+    JobStatus: 
+        enum: [
+          "IN_PROGRESS",
+          "COMPLETED",
+          "COMPLETED_WITH_ERRORS",
+          "NOT_STARTED",
+          "FAILED",
+          "BFF_Exception"
+        ]
+        type: integer
+        format: "int32"
+    BFFEnabledStatusResponse: 
+        type: object
+        properties: 
+          UserId: 
+            type: string
+            nullable: true
+          UserName: 
+            type: string
+            nullable: true
+          IsBFFEnabled: 
+            type: boolean
+          ResponseMessageKind: 
+            $ref: "#/components/schemas/ResponseMessageKind"
+          MessageDetails:
+            type: array
+            items: 
+              $ref: "#/components/schemas/MessageDetail"
+            description: "Gets or sets a collection of snaplotbff.Models.Response.MessageDetails used to describe this message"
+            nullable: true
+        additionalProperties: false
+        description: "Response class returned to API caller to determine if launch darkly flag for BFF is true or not."
+    VehicleQueryResponse:
+      type: object
+      properties:
+        LastQueried:
+          type: string
+          format: date-time
+        Vehicles:
+          type: array
+          items:
+            "$ref": "#/components/schemas/VehicleInfo"
+          nullable: true
+        TreatMissingImagesAsDeleted:
+          type: boolean
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    VehicleInfo:
+      type: object
+      properties:
+        MasterVehicleId:
+          type: string
+          nullable: true
+        DateCreated:
+          type: string
+          format: date-time
+        DateInStock:
+          type: string
+          format: date-time
+          nullable: true
+        DaysInStock:
+          type: integer
+          format: int32
+          nullable: true
+        DateLastTouched:
+          type: string
+          format: date-time
+        IsSold:
+          type: boolean
+        Make:
+          type: string
+          nullable: true
+        ExteriorColorDescription:
+          type: string
+          nullable: true
+        Model:
+          type: string
+          nullable: true
+        PhotoCount:
+          type: integer
+          format: int32
+        StockNumber:
+          type: string
+          nullable: true
+        Trim:
+          type: string
+          nullable: true
+        VehicleCondition:
+          "$ref": "#/components/schemas/VehicleCondition"
+        VehicleLifeCycleState:
+          "$ref": "#/components/schemas/VehicleLifeCycleState"
+        Vin:
+          type: string
+          nullable: true
+        Year:
+          type: integer
+          format: int32
+          nullable: true
+        VehicleImages:
+          type: array
+          items:
+            "$ref": "#/components/schemas/VehicleImageInfo"
+          nullable: true
+        FlickFusionInterior360ID:
+          type: string
+          nullable: true
+        FlickFusionExterior360ID:
+          type: string
+          nullable: true
+        InventoryLotId:
+          type: string
+          nullable: true
+      additionalProperties: false
+    VehicleCondition:
+      enum:
+      - New
+      - Used
+      - Other
+      type: integer
+      format: int32
+    VehicleLifeCycleState:
+      enum:
+      - InPrep
+      - Live
+      - Archived
+      type: integer
+      format: int32
+    VehicleImageInfo:
+      type: object
+      properties:
+        PhotoGuideDefinitionCaption:
+          type: string
+          nullable: true
+        Position:
+          type: integer
+          format: int32
+        ThumbnailUri:
+          type: string
+          nullable: true
+        ImageUri:
+          type: string
+          nullable: true
+        MediaAssetId:
+          type: string
+          nullable: true
+        FileName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    VirtualRooftopListResponse:
+      type: object
+      properties:
+        VirtualRooftops:
+          type: array
+          items:
+            "$ref": "#/components/schemas/VirtualRooftopInfo"
+          nullable: true
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    VehicleResponse:
+      type: object
+      properties:
+        Vehicle:
+          "$ref": "#/components/schemas/VehicleInfo"
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    Vehicle360Request:
+      type: object
+      properties:
+        Interior360ID:
+          type: string
+          nullable: true
+        Exterior360ID:
+          type: string
+          nullable: true
+        StockNumber:
+          type: string
+          nullable: true
+        Vin:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Vehicle360Response:
+      type: object
+      properties:
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    VehicleImageBatchResponse:
+      type: object
+      properties:
+        JobStatus:
+          "$ref": "#/components/schemas/JobStatus"
+        VehicleImageResponses:
+          type: array
+          items:
+            "$ref": "#/components/schemas/VehicleImageResponse"
+          nullable: true
+        MediaLastUpdatedOn:
+          type: string
+          format: date-time
+          nullable: true
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+      description: Api response of batch image upload
+    VehicleImageResponse:
+      type: object
+      properties:
+        ImageFileName:
+          type: string
+          nullable: true
+        PublicUrl:
+          type: string
+          nullable: true
+        MediaAssetId:
+          type: string
+          nullable: true
+        PhotoGuideDefinitionCaption:
+          type: string
+          nullable: true
+        ThumbnailUri:
+          type: string
+          nullable: true
+        Position:
+          type: integer
+          format: int32
+      additionalProperties: false
+    VirtualRooftopInfo:
+      type: object
+      properties:
+        AddVehicle:
+          type: boolean
+        CanModifyInventory:
+          type: boolean
+        CanModifyPhotos:
+          type: boolean
+        HasInvoicing:
+          type: boolean
+        HasKelleyBlueBook:
+          type: boolean
+        HasSnaplot360:
+          type: boolean
+        PermissionSet:
+          type: array
+          items:
+            type: string
+          nullable: true
+        InventoryLots:
+          type: array
+          items:
+            "$ref": "#/components/schemas/InventoryLotInfo"
+          nullable: true
+        ParentVirtualRooftopId:
+          type: string
+          nullable: true
+        Name:
+          type: string
+          nullable: true
+        VirtualRooftopId:
+          type: string
+          nullable: true
+        VirtualRooftopType:
+          "$ref": "#/components/schemas/VirtualRooftopType"
+      additionalProperties: false
+    VehicleImageBatchUpdateRequest:
+      type: object
+      properties:
+        CviEntityId:
+          type: string
+          nullable: true
+        ImageUpdateRequests:
+          type: array
+          items:
+            "$ref": "#/components/schemas/VehicleImageSingleUpdateRequest"
+          nullable: true
+      additionalProperties: false
+    VehicleImageSingleUpdateRequest:
+      type: object
+      properties:
+        ImageFileName:
+          type: string
+          nullable: true
+        PublicUrl:
+          type: string
+          nullable: true
+        MediaAssetId:
+          type: string
+          nullable: true
+        PhotoGuideDefinitionCaption:
+          type: string
+          nullable: true
+      additionalProperties: false
+    VirtualRooftopType:
+      enum:
+      - Unknown
+      - Reseller
+      - Organization
+      - Autogroup
+      - Dealer
+      - NearestReseller
+      type: integer
+      format: int32
+    ResponseMessageKind: 
+        enum: [
+          "None",
+          "Successful",
+          "Failed",
+          "Accepted",
+          "NotFound"
+        ]
+        type: integer
+        format: int32
+    MessageDetail: 
+        type: object
+        properties: 
+          MessageDetailDate: 
+            type: string
+            description: Gets or sets the DateTime of the occurrence,
+            format: date-time
+          MessageDetailKind: 
+            $ref: "#/components/schemas/MessageDetailKind"
+          MessageDetailCode:
+            "$ref": "#/components/schemas/MessageDetailCode"
+          MessageDetailText:
+            type: string
+            description: "Gets or sets the detailed message text for this instance"
+            nullable: true
+        additionalProperties: false
+    VirtualRooftopSetting:
+      type: object
+      properties:
+        MaxHeightOrWidth:
+          type: string
+          nullable: true
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    MessageDetailKind: 
+        enum: [
+          "Unknown",
+          "Info",
+          "Warning",
+          "Error"
+        ]
+        type: integer
+        format: "int32"
+    MessageDetailCode: 
+        enum: [
+          "GeneralInformation",
+          "GeneralException"
+        ]
+        type: integer
+        format: int32
+    UserDealerInfoResponse:
+      type: object
+      properties:
+        UserDealerInfo:
+          "$ref": "#/components/schemas/UserDealerInfo"
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+      description: Response class returned to API caller when requested user and dealer
+        info.
+    UserDealerInfo:
+      type: object
+      properties:
+        DisplayName:
+          type: string
+          nullable: true
+        Email:
+          type: string
+          nullable: true
+        RootDealerId:
+          type: string
+          nullable: true
+        UserId:
+          type: string
+          nullable: true
+        UserName:
+          type: string
+          nullable: true
+      additionalProperties: false
+      description: Class to hold user and dealer info the respective endpoint
+    VehicleImageUploadResponse:
+      type: object
+      properties:
+        ImageFileName:
+          type: string
+          nullable: true
+        PublicUrl:
+          type: string
+          nullable: true
+        ResponseMessageKind:
+          "$ref": "#/components/schemas/ResponseMessageKind"
+        MessageDetails:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MessageDetail"
+          description: Gets or sets a collection of snaplotbff.Models.Response.MessageDetails
+            used to describe this message
+          nullable: true
+      additionalProperties: false
+    UploadResult:
+      type: object
+      properties:
+        S3Url:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+paths:
+  /photoguidelibrary:
+    get:
+      tags:
+        - PhotoPackage
+      summary: "This endpoint will return photo guide library master data"
+      parameters:
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/photoguidelibrary" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      responses:
+        "200":
+          description: Success
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhotoGuideLibraryCollection"
+        "404":
+          description: Not Found
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Not Found
+        "401":
+          description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Unauthorized
+  /photoguide:
+    put:
+      tags:
+        - PhotoPackage
+      summary: "Save/Update Photo Guide for an entity"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L PUT "https://api.snaplotbff.coxauto-imgmerch.cloud/photoguide" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        description: object (PhotoGuideRequest) serialized as Json
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoGuideRequest"
+      responses:
+        "201":
+          description: Created
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Created
+        "204":
+          description: No Content
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: No Content
+        "400":
+          description: Bad Request.
+        "401":
+          description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Unauthorized
+  /photoGuide/{entityId}:
+      get:
+        tags:
+          - PhotoPackage
+        summary: "This endpoint to get selected/unselected photoguides for a specific entity"
+        parameters:
+          - name: X-CoxAuto-Correlation-Id
+            in: header
+            description: An optional correlation id that can be used to trace requests throughout
+              Cox Auto APIs. One will be automatically generated if none is provided.
+            schema:
+              type: string
+          - name: X-SnapLotToken
+            in: header
+            description: SnaplotToken for authentication.
+            schema:
+              type: string
+        x-codeSamples:
+          - label: curl
+            lang: curl
+            source: |
+              curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/photoGuide/{entityId}" \
+              -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+              -H "X-SnapLotToken:<snaplotToken>"
+        responses:
+          "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/PhotoPackageForEntityResponse"
+          "401":
+            description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                example:
+                  message: Unauthorized
+  /upload-logs:
+    put:
+      tags:
+        - Logs
+      summary: "Upload Logs to S3 Bucket"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/upload-logs/{username}" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: username
+        in: path
+        description: Username
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form 
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/UploadResult"
+        "413":
+          description: File is larger than 100 mb
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+        "400":
+          description: No Content Provided.
+        "401":
+          description: Unauthorized.
+  /photopackages/{photoPackageId}:
+    get:
+      tags:
+        - PhotoPackage
+      summary: "Returns a zip file containing the all photo guides within the specified photo package"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/photopackages/{photoPackageId}" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: photoPackageId
+        in: path
+        description: PhotoPackageId
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+        "404":
+          description: Not Found
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Not Found
+        "401":
+          description: Unauthorized.
+  /userDealerInfo:
+    get:
+      tags:
+        - User Dealer
+      summary: "Get user and root dealer info"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/userDealerInfo" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+        - name: X-CoxAuto-Correlation-Id
+          in: header
+          description: An optional correlation id that can be used to trace requests throughout
+            Cox Auto APIs. One will be automatically generated if none is provided.
+          schema:
+            type: string
+        - name: X-SnapLotToken
+          in: header
+          description: SnaplotToken for authentication.
+          schema:
+            type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/UserDealerInfoResponse"
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/UserDealerInfoResponse"
+        "401":
+          description: Unauthorized.
+  /BFFEnabledStatusForProxyByUsername/{username}:
+    get:
+      tags:
+        - User Dealer
+      summary: "Determines whether BFF flow is enabled based on input username."
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/BFFEnabledStatusForProxyByUsername/{username}" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: username
+        in: path
+        description: Required username field in request by mobile client
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BFFEnabledStatusResponse"
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BFFEnabledStatusResponse"
+        "400":
+          description: Bad Request.
+        "401":
+          description: Unauthorized.
+  /BFFEnabledStatus:
+    get:
+      tags:
+        - User Dealer
+      summary: "Determines whether BFF flow is enabled based on launch darkly feature flag and associated user/dealer."
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/BFFEnabledStatus" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BFFEnabledStatusResponse"
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BFFEnabledStatusResponse"
+        "401":
+          description: Unauthorized.
+  /ilots/vehicles/{vehicleId}/photos/{fileName}:
+    post:
+      tags:
+        - Vehicle Media
+      summary: "Upload Image to S3 Bucket"
+      parameters:
+      - name: vehicleId
+        in: path
+        description: The inventory vehicle ID to which the media belongs
+        required: true
+        schema:
+          type: string
+      - name: fileName
+        in: path
+        description: Name of file to upload
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleImageUploadResponse"
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleImageUploadResponse"
+        "405":
+          description: Method Not Allowed.
+        "422":
+          description: Client Error.
+        "401":
+          description: Unauthorized.
+  /ilots/vehicles/{vehicleId}/batchphotos:
+    put:
+      tags:
+        - Vehicle Media
+      summary: "Upload Images for a Vehicle"
+      parameters:
+      - name: vehicleId
+        in: path
+        description: The inventory vehicle ID to which the media belongs
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/VehicleImageBatchUpdateRequest"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/VehicleImageBatchUpdateRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/VehicleImageBatchUpdateRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/VehicleImageBatchUpdateRequest"
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleImageBatchResponse"
+        "401":
+          description: Unauthorized.
+  /ilots/vehicles/{vehicleId}/batchphotos/status:
+    get:
+      tags:
+        - Vehicle Media
+      summary: "Gets the Upload Images status for a Vehicle"
+      parameters:
+      - name: vehicleId
+        in: path
+        description: The inventory vehicle ID to which the media belongs
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleImageBatchResponse"
+        "401":
+          description: Unauthorized.
+  /ilots/{cviEntityId}/vehicles/{vehicleId}/360IDs:
+    post:
+      tags:
+        - Vehicle Media
+      summary: "Updates the interior and exterior 360 IDs"
+      parameters:
+      - name: cviEntityId
+        in: path
+        description: The entity ID to which the inventory media belongs
+        required: true
+        schema:
+          type: string
+      - name: vehicleId
+        in: path
+        description: The inventory vehicle ID to which the media belongs
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle360Request"
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Vehicle360Response"
+        "400":
+          description: Bad Request.
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Vehicle360Response"
+        "401":
+          description: Unauthorized.
+    put:
+      tags:
+        - Vehicle Media
+      summary: "Updates the interior and exterior 360 IDs"
+      parameters:
+      - name: cviEntityId
+        in: path
+        description: The entity ID to which the inventory media belongs
+        required: true
+        schema:
+          type: string
+      - name: vehicleId
+        in: path
+        description: The inventory vehicle ID to which the media belongs
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Vehicle360Request"
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Vehicle360Response"
+        "400":
+          description: Bad Request.
+        "500":
+            description: Server Error
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleQueryResponse"
+        "401":
+          description: Unauthorized.
+  /rooftops/{virtualRooftopId}/vehicles:
+    get:
+      tags:
+        - Vehicle Query
+      summary: "Get all vehicles for specified virtual rooftop"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/rooftops/{virtualRooftopId}/vehicles" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: virtualRooftopId
+        in: path
+        description: virtualRooftopId
+        required: true
+        schema:
+          type: string
+      - name: lastQueried
+        in: query
+        description: Last queried date
+        schema:
+          type: string
+          format: date-time
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleQueryResponse"
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Server Error.
+  /vehicle/{vehicleId}:
+    get:
+      tags:
+        - Vehicle Query
+      summary: "Get vehicle Information"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/rooftops/vehicle/{vehicleId}" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VehicleResponse"
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Server Error.
+  /users/{userId}/rooftops:
+    get:
+      tags:
+        - Virtual Rooftop
+      summary: "Get list of VirtualRooftops"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/users/{userId}/rooftops" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: userId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VirtualRooftopListResponse"
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Server Error.
+          headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VirtualRooftopListResponse"
+  /settings/{platformId}/rooftops:
+    get:
+      tags:
+        - Virtual Rooftop
+      summary: "Get VirtualRooftops Settings"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/settings/{platformId}/rooftops" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      parameters:
+      - name: platformId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: X-CoxAuto-Correlation-Id
+        in: header
+        description: An optional correlation id that can be used to trace requests throughout
+          Cox Auto APIs. One will be automatically generated if none is provided.
+        schema:
+          type: string
+      - name: X-SnapLotToken
+        in: header
+        description: SnaplotToken for authentication.
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VirtualRooftopSetting"
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Server Error.
+          headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/VirtualRooftopSetting"
+  

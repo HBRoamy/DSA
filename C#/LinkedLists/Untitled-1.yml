@@ -1,0 +1,345 @@
+openapi: 3.0.1
+info:
+  title: Custom Photo Guide
+  description: |
+    Documentation for Custom Photo Guide
+  contact:
+    name: Team Tejas
+  version: 1.0.0
+servers:
+  - url: "https://api.snaplotbff.coxauto-imgmerch-np.cloud"
+    description: Development
+  - url: "https://api.snaplotbff.coxauto-imgmerch.cloud"
+    description: Production
+tags:
+  - name: Overview
+    description: | 
+      As a vAuto customer, I want a capability to customize the photo guides so that I can ensure that the media captured and merchandised for my dealership's inventory resonates with my brand and merchandising strategy.
+  - name: Support
+    description: |
+      For any questions reach out to us at `#iss-tejas` in Slack.
+  - name: PhotoGuideLibrary
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideLibrary"/>
+  - name: PhotoGuideLibraryCollection
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideLibraryCollection"/>
+  - name: PhotoGuideRequest
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideRequest"/>
+  - name: PhotoGuideEntityResponse
+    description: <SchemaDefinition schemaRef="#/components/schemas/PhotoGuideEntityResponse"/>  
+
+
+x-tagGroups:
+  - name: INTRODUCTION
+    tags:
+      - Overview
+      - Authentication
+      - Support
+  - name: API
+    tags:
+      - Photo Guide Library
+  - name: Models
+    tags:
+      - PhotoGuideLibrary
+      - PhotoGuideLibraryCollection
+      - PhotoGuideRequest
+      - PhotoGuideEntityResponse
+components:
+  schemas:
+    PhotoGuideLibrary:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Photo Guide Definition Id
+          example: 1000115
+        imageFileName:
+          type: string
+          description: Image File Name
+          example: ph_icon_wide_angle_dashboard.png
+        imageFileNameWithID:
+          type: string
+          description: Image FileName with Id
+          example: 1000115_ph_icon_wide_angle_dashboard.png
+        title:
+          type: string
+          description: Title
+          format: string
+        shortTitle:
+          type: string
+          description: Short Title
+          format: string
+        imageUrl:
+          type: string
+          description: Image Url
+          format: string
+      additionalProperties: false
+      description: Photo Guide Library Data
+      example:
+        id: 1000115
+        title: 16:9 Wide Angle Dashboard
+        imageFileName: "ph_icon_wide_angle_dashboard.png"
+        imageFileNameWithID: "1000115_ph_icon_wide_angle_dashboard.png"
+        shortTitle: "16:9 Wide Dash"
+        imageUrl: "http://image-url/1.png"
+    PhotoGuideLibraryCollection:
+      type: array
+      items:
+          $ref: "#/components/schemas/PhotoGuideLibrary"
+          description: List of hotspot matching the criteria
+          nullable: true
+      additionalProperties: false
+      example:
+          - id: 1000115
+            imageFileName : ph_icon_wide_angle_dashboard.png
+            imageFileNameWithID : 1000115_ph_icon_wide_angle_dashboard.png
+            title: 16:9 Wide Angle Dashboard
+            shortTitle: 16:9 Wide Dash
+            imageUrl : http://image.url
+          - id: 1000000
+            imageFileName : ustom_guide_ph_icon_3rd_row_st.png
+            imageFileNameWithID : 1000000_custom_guide_ph_icon_3rd_row_st.png
+            title: 3rd Row Seats
+            shortTitle: 3rd Row St
+            imageUrl : http://image.url
+    PhotoGuideRequest:
+      required:
+        - entityId
+        - isActive
+      type: object
+      properties:
+        entityId:
+          type: string
+          description: Entity Id 
+        isActive:
+          type: boolean
+          description: IsActive 
+        photoGuides:
+          type: array
+          items:
+            type: object
+            properties:
+              isRequired:
+                type: string
+                description: true if photoguide is required
+              photoGuideDefinitionId:
+                type: string
+                description: photoguide Id
+              position:
+                type: integer
+                description: position of a photoguide
+              titleOverride:
+                type: string
+                description: override title if required 
+    PhotoGuideEntityResponse:
+      required:
+        - entityId
+        - isActive
+      type: object
+      properties:
+        entityId:
+          type: string
+          description: Entity Id 
+        isActive:
+          type: boolean
+          description: IsActive 
+        photoGuides:
+          type: array
+          items:
+            type: object
+            properties:
+              isRequired:
+                type: boolean
+                description: true if photoguide is required
+              photoGuideDefinitionId:
+                type: string
+                description: photoguide Id
+              position:
+                type: integer
+                description: position of a photoguide
+              titleOverride:
+                type: string
+                description: override title if required
+        unSelectedPhotoGuides:
+          type: array
+          items:
+            $ref: "#/components/schemas/PhotoGuideLibrary"
+paths:
+  /photoguidelibrary:
+    get:
+      tags:
+        - Photo Guide Library
+      summary: "This endpoint will return photo guide library master data specific to vauto"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/photoguidelibrary" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      responses:
+        "200":
+          description: Success
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PhotoGuideLibraryCollection"
+        "404":
+          description: Not Found
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Not Found
+        "401":
+          description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Unauthorized
+
+  /photoguide:
+    put:
+      tags:
+        - Photo Guide Library
+      summary: "Save/Update Photo Guide for an entity"
+      x-codeSamples:
+        - label: curl
+          lang: curl
+          source: |
+            curl -L PUT "https://api.snaplotbff.coxauto-imgmerch.cloud/photoguide" \
+            -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+            -H "X-SnapLotToken:<snaplotToken>"
+      requestBody:
+        description: object (PhotoGuideRequest) serialized as Json
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoGuideRequest"
+      responses:
+        "201":
+          description: Created
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Created
+        "204":
+          description: No Content
+          headers:
+            X-CoxAuto-Correlation-Id:
+              description: Correlation Id to provide call traceability.
+              schema:
+                type: string
+                description: Correlation Id to provide call traceability.
+                format: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: No Content
+        "401":
+          description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Unauthorized
+  /photoGuide/{entityId}:
+      get:
+        tags:
+          - Photo Guide Library
+        summary: "This endpoint to get selected/unselected photoguides for a specific entity"
+        x-codeSamples:
+          - label: curl
+            lang: curl
+            source: |
+              curl -L GET "https://api.snaplotbff.coxauto-imgmerch.cloud/photoGuide/{entityId}" \
+              -H "X-CoxAuto-Correlation-Id:documentation-sample-request"
+              -H "X-SnapLotToken:<snaplotToken>"
+        responses:
+          "200":
+            description: Success
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/PhotoGuideEntityResponse"
+          "404":
+            description: Not Found
+            headers:
+              X-CoxAuto-Correlation-Id:
+                description: Correlation Id to provide call traceability.
+                schema:
+                  type: string
+                  description: Correlation Id to provide call traceability.
+                  format: ""
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                example:
+                  message: Not Found
+          "401":
+            description: Authorization information is missing or invalid (e.g., expired or from unknown identity provider).
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                example:
+                  message: Unauthorized
